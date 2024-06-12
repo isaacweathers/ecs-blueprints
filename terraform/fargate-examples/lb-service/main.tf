@@ -2,6 +2,18 @@ provider "aws" {
   region = local.region
 }
 
+// configuration for terraform cloud login
+
+terraform {
+  cloud {
+    organization = "isaacweathersnet"
+
+    workspaces {
+      name = "lb-service"
+    }
+  }
+}
+
 locals {
   name   = "ecsdemo-frontend"
   region = "us-west-2"

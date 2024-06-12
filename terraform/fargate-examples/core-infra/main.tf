@@ -2,14 +2,26 @@ provider "aws" {
   region = local.region
 }
 
+// configuration for terraform cloud login
+
+terraform {
+  cloud {
+    organization = "isaacweathersnet"
+
+    workspaces {
+      name = "ecs-blueprint-core-infra"
+    }
+  }
+}
+
 data "aws_availability_zones" "available" {}
 
 locals {
-  name   = basename(path.cwd)
+  name   = "core-infra"
   region = "us-west-2"
 
   vpc_cidr = "10.0.0.0/16"
-  azs      = slice(data.aws_availability_zones.available.names, 0, 3)
+  azs      = ["us-west-2a", "us-west-2b", "us-west-2c"]
 
   tags = {
     Blueprint  = local.name
